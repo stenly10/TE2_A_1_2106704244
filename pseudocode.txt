@@ -1,0 +1,43 @@
+Branch-and-Bound (G)
+    Input :Graph G of (V, E)
+    Output :Vertex Cover of G
+
+1.  VC = empty list
+2.  v = vertex with highest degree
+3.  FrontierSet = [(v, 0, (−1, −1)), (v, 1, (−1, −1))] // (vertex, state, (parent vertex, partent vertexstate)) = subproblem
+4.  // state of vertex represents whether vertex is in VC, 1 = yes, 0 = no
+5.  UpperBound = |V|
+6.  while FrontierSet not empty
+7.      (vi, state, parent) = FrontierSet.pop() // get last element of FrontierSet
+8.      VC.add((vi, state))
+9.      backtrack = false
+10.     if state = 0 then
+11.         for all vertex neighborV which is neighbor of vi
+12.             VC = VC ∪ (neighborV, 1)
+13.             G.removeNode(neighborV)
+14.     else if state = 1 then
+15.         G.removeNode(vi)
+16.     if G.edges is none
+17.         if |VC| < UpperBound then
+18.             opt = VC
+19.             UpperBound = |VC|
+20.         backtrack = true
+21.     else
+22.         if LowerBound(G) + |VC| < UpperBound then // worth exploring
+23.             vj = vertex with highest degree in new G
+24.             FrontierSet = FrontierSet ∪ [(vj, 0, (vi,state)), (vj, 1, (vi,state))]
+25.         else // not worth exploring
+26.             backtrack = true
+27.     if backtrack == true and FrontierSet is not empty then
+28.         nextparent = parent of last element in FrontierSet
+29.         if nextparent in VC then
+30.             index = index of nextparent in VC
+31.             for i = index to |VC| do
+32.                 remove VC(i) from VC
+33.                 add node in VC(i) and its edges back to G
+34.         else
+35.             reset VC to empty
+36.             reset G to original G
+37. return opt
+
+
