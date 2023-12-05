@@ -22,7 +22,7 @@ def get_graph_bnb(filename, type):
             G.remove_node(i)
     elif type == 'medium':
         N = 10**5
-        for i in range(81, N+1):
+        for i in range(86, N+1):
             G.remove_node(i)
     elif type == 'big':
         N = 10**6
